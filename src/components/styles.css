@@ -1,0 +1,27 @@
+.appBody {
+    width: 85%;
+    min-height: 500px;
+}
+
+.appOptions {
+    background-color: #514463;
+    width: 15%;
+}
+
+.root {
+    display: flex;
+}
+
+.optBtn {
+    background-color: #694895;
+    height: 75px;
+    width: 100%;
+}
+
+.form {
+    padding: 50px;
+}
+
+.form h3 {
+    padding-bottom: 30px;
+}

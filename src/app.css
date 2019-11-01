@@ -1,0 +1,17 @@
+.appHeader {
+    background-color: blueviolet;
+    color: white;
+    height: 100px;
+    padding: 20px;
+}
+.appContainer {
+    min-height: 500px;
+}
+.appFooter {
+    background-color: #1B2631;
+    color: lavender;
+    height: 50px;
+    font-size: 12px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
