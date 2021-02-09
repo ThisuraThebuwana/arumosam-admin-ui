@@ -9,21 +9,34 @@ class AddNewItem extends Component {
         super(props);
         this.state = {
             item: {
-                name: '',
+                Item_code: '',
                 category: '',
-                description: '',
+                item_desc: '',
+                image: '',
                 qty: '',
-                price: ''
+                buying_price: '',
+                selling_price: '',
+                date_bought: new Date()
             }
         }
     }
 
     handleSubmit = () =>{
-        let data = this.state.item;
-        console.log(data);
-        let url = "http://172.21.128.1:8080/items/";
-        axios.post(url,data).then((res)=>{
-            console.log(res);
+
+        axios.get('http://localhost:3002/items/lastItemCode').then((result)=>{
+            this.setState({
+                item: {
+                    ...this.state.item,
+                    Item_code: ++result.data[0].Item_code
+                }
+            })
+        }).then(()=>{
+            let data = this.state.item;
+            console.log(data);
+            let url = "http://localhost:3002/items/";
+            axios.post(url,data).then((res)=>{
+                console.log(res);
+            });
         });
     };
 
@@ -37,7 +50,6 @@ class AddNewItem extends Component {
         this.setState({
             item: {...this.state.item, category: category}
         });
-        // console.log(category)
     };
 
     render() {
@@ -46,24 +58,20 @@ class AddNewItem extends Component {
             <div className={'form'}>
                 <h3>Add New Item</h3>
                 <Form >
-                    <Form.Group controlId="formBasicName">
-                        <Form.Label>Item Name</Form.Label>
-                        <Form.Control type="text" placeholder="Enter name" name='name' value={Item.name} onChange={this.handleTextInputChange}/>
-                    </Form.Group>
                     <Form.Group controlId="CategorySelect">
                         <Form.Label>Category</Form.Label>
                         <Form.Control as="select" name='category' onChange={(e)=>this.handleDropdownChange(e.target.value)}>
-                            <option>Watches</option>
-                            <option>Gift Packs</option>
-                            <option>Teddy Bears</option>
-                            <option>Purses</option>
+                            <option>Watch</option>
+                            <option>Sunglasses</option>
+                            <option>Teddy Bear</option>
+                            <option>Purse</option>
                             <option>Wallet</option>
                         </Form.Control>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicDescription">
                         <Form.Label>Description</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Description" name='description' value={Item.description} onChange={this.handleTextInputChange}/>
+                        <Form.Control type="text" placeholder="Enter Description" name='item_desc' value={Item.item_desc} onChange={this.handleTextInputChange}/>
                     </Form.Group>
 
                     <Form.Group controlId="formBasicQuantity">
@@ -72,9 +80,20 @@ class AddNewItem extends Component {
                     </Form.Group>
 
                     <Form.Group controlId="formBasicPrice">
-                        <Form.Label>Price</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Price" name='price' value={Item.price} onChange={this.handleTextInputChange}/>
+                        <Form.Label>Buying Price</Form.Label>
+                        <Form.Control type="text" placeholder="Enter Price" name='buying_price' value={Item.buying_price} onChange={this.handleTextInputChange}/>
                     </Form.Group>
+
+                    <Form.Group controlId="formBasicPrice">
+                        <Form.Label>Selling Price</Form.Label>
+                        <Form.Control type="text" placeholder="Enter Price" name='selling_price' value={Item.selling_price} onChange={this.handleTextInputChange}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="formBasicPrice">
+                        <Form.Label>Buying Date</Form.Label>
+                        <Form.Control type="date" placeholder="Select date" name='date_bought' value={this.state.date_bought} onChange={this.handleTextInputChange}/>
+                    </Form.Group>
+
                     <Button variant="primary" onClick={this.handleSubmit}>
                         Submit
                     </Button>
@@ -83,10 +102,4 @@ class AddNewItem extends Component {
         );
     }
 }
-//
-// a
-// async async a
-// a
-
-
 export default AddNewItem;
